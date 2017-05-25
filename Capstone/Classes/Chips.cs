@@ -10,10 +10,8 @@ namespace Capstone.Classes
 {
     public class Chips : Item
     {
-        public Chips(string name, decimal price)
+        public Chips(string name, decimal price) : base(name, price)
         {
-            this.Name = name;
-            this.Price = price;
         }
         public override string Consume()
         {

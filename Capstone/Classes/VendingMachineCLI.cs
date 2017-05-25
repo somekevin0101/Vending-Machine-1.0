@@ -11,6 +11,7 @@ namespace Capstone.Classes
     {
         public void Display()
         {
+
             PrintHeader();
 
             while (true)

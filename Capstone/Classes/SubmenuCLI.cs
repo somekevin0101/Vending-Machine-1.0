@@ -13,12 +13,16 @@ namespace Capstone.Classes
 
         public void Display()
         {
-            VendingMachine vend = new VendingMachine();
-            
+            string directory = Environment.CurrentDirectory;
+            string filename = "vendingmachine.csv";
+            string fullPath = Path.Combine(directory, filename);
+            VendingMachFileReader vmfr = new VendingMachFileReader();
+            Dictionary<string, List<Item>> inventory = vmfr.ReadFile(fullPath);
+
+            VendingMachine vend = new VendingMachine(inventory);
 
             while (true)
             {
-
                 Console.WriteLine("(1) Feed Money");
                 Console.WriteLine("(2) Select Product");
                 Console.WriteLine("(3) Finish Transaction");
@@ -33,10 +37,8 @@ namespace Capstone.Classes
                     Console.WriteLine("Please enter a dollar amount(1, 2, 5, 10,)");
                     string moneyInput = Console.ReadLine();
                     Decimal.TryParse(moneyInput, out moneyParsed);
-                     
 
                     Console.WriteLine("Money balance is $ " + vend.FeedMoney(moneyParsed));
-
                 }
 
                 else if (input == "2" || input == "(2)")

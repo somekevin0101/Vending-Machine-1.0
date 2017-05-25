@@ -49,6 +49,8 @@
     <Compile Include="Classes\Drink.cs" />
     <Compile Include="Classes\Gum.cs" />
     <Compile Include="Classes\SubmenuCLI.cs" />
+    <Compile Include="Classes\VendingMachFileReader.cs" />
+    <Compile Include="Classes\VendingMachFileWriter.cs" />
     <Compile Include="Classes\VendingMachine.cs" />
     <Compile Include="Classes\Item.cs" />
     <Compile Include="Classes\VendingMachineCLI.cs" />

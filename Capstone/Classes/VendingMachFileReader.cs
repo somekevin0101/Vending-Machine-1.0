@@ -7,14 +7,10 @@ using System.Threading.Tasks;
 
 namespace Capstone.Classes
 {
-    public static class VendingMachFileReader
+    public class VendingMachFileReader
     {
-        public static void ReadFile()
+        public Dictionary<string, List<Item>> ReadFile(string fullPath)
         {
-            string directory = Environment.CurrentDirectory;
-            string filename = "vendingmachine.csv";
-
-            string fullPath = Path.Combine(directory, filename);
 
             Dictionary<string, List<Item>> inventory = new Dictionary<string, List<Item>>();
 
@@ -64,6 +60,7 @@ namespace Capstone.Classes
                 Console.WriteLine("Error reading the file");
                 Console.WriteLine(e.Message);
             }
+            return inventory;
         }
     }
 }

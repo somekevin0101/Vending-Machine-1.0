@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Capstone.Classes
 {
-    public static class VendingMachFileWriter
+    public class VendingMachFileWriter
     {
-        public static void VMFileWriter(string path)
+        public void VMFileWriter(string path)
         {
             string directory = Environment.CurrentDirectory;
             string filename = "vendingMachine_updated.csv";

@@ -15,22 +15,20 @@ namespace Capstone.Classes
         public string Name
         {
             get { return this.name; }
-            set { this.name = value; }
         }
-
 
         private decimal price;
         public decimal Price
         {
             get { return this.price; }
-            set { this.price = value; }
         }
 
-        
-        public virtual string Consume()
+        public Item(string name, decimal price)
         {
-            
-            return "yummy";
+            this.name = name;
+            this.price = price;
         }
+
+        public abstract string Consume();
     }
 }
