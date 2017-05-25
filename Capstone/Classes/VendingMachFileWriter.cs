@@ -9,23 +9,18 @@ namespace Capstone.Classes
 {
     public class VendingMachFileWriter
     {
-        public void VMFileWriter(string path)
+        private string fullPath;
+        public VendingMachFileWriter(string fullPath)
         {
-            string directory = Environment.CurrentDirectory;
-            string filename = "vendingMachine_updated.csv";
-            string fullPath = Path.Combine(directory, filename);
+            this.fullPath = fullPath;
         }
-        public static void LogMessage(string message)
+        public void LogMessage(string message)
         {
-            string directory = Environment.CurrentDirectory;
-            string filename = "Log.txt";
-            string fullPath = Path.Combine(directory, filename);
-
             try
             {
-                using (StreamWriter sw = new StreamWriter(filename))
+                using (StreamWriter sw = new StreamWriter(fullPath))
                 {
-                    sw.WriteLine(DateTime.UtcNow + method.GetType().Name + "transactionAmount" + VendingMachine.Balance);
+                    sw.WriteLine(DateTime.UtcNow + " " + message);
                 }
             }
             catch (IOException ex)

@@ -10,12 +10,18 @@ namespace Capstone.Classes
 {
     public class SubmenuCLI
     {
+        private VendingMachFileWriter vmfw;
 
         public void Display()
         {
             string directory = Environment.CurrentDirectory;
-            string filename = "vendingmachine.csv";
+            string filename = "Log.txt";
             string fullPath = Path.Combine(directory, filename);
+            vmfw = new VendingMachFileWriter(fullPath);
+
+            directory = Environment.CurrentDirectory;
+            filename = "vendingmachine.csv";
+            fullPath = Path.Combine(directory, filename);
             VendingMachFileReader vmfr = new VendingMachFileReader();
             Dictionary<string, List<Item>> inventory = vmfr.ReadFile(fullPath);
 
