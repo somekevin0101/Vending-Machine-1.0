@@ -16,7 +16,7 @@ namespace Capstone.Classes
 
             string fullPath = Path.Combine(directory, filename);
 
-            Dictionary<string, List<Item>> dictionary = new Dictionary<string, List<Item>>();
+            Dictionary<string, List<Item>> inventory = new Dictionary<string, List<Item>>();
 
             try
             {
@@ -25,25 +25,45 @@ namespace Capstone.Classes
                     while (!sr.EndOfStream)
                     {
                         string line = sr.ReadLine();
-                        string[] items = line.Split('|');
-
-                        List<VMItems> items = new List<VMItems>();
-                        for (int i = 0; i < 5; i++)
+                        string[] parts = line.Split('|');
+                        List<Item> items = new List<Item>();
+                        if (parts[0].StartsWith("A"))
                         {
-                            if (slot starts with A)
+                            for (int i = 0; i < 5; i++)
                             {
+                                items.Add(new Chips(parts[1], decimal.Parse(parts[2])));
+                            }
                         }
+                        else if (parts[0].StartsWith("B"))
+                        {
+                            for (int i = 0; i < 5; i++)
+                            {
+                                items.Add(new Candy(parts[1], decimal.Parse(parts[2])));
+                            }
+                        }
+                        else if (parts[0].StartsWith("C"))
+                        {
+                            for (int i = 0; i < 5; i++)
+                            {
+                                items.Add(new Drink(parts[1], decimal.Parse(parts[2])));
+                            }
+                        }
+                        else if (parts[0].StartsWith("D"))
+                        {
+                            for (int i = 0; i < 5; i++)
+                            {
+                                items.Add(new Gum(parts[1], decimal.Parse(parts[2])));
+                            }
+                        }
+                        inventory.Add(parts[0], items);
                     }
                 }
-                dictionary.Add(slot, items);
             }
-            }
-    }
             catch (IOException e)
             {
                 Console.WriteLine("Error reading the file");
                 Console.WriteLine(e.Message);
             }
-}
+        }
     }
 }

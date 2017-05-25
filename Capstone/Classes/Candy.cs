@@ -9,10 +9,8 @@ namespace Capstone.Classes
 {
     public class Candy : Item
     {
-        public Candy(string name, decimal price)
+        public Candy(string name, decimal price) : base(name, price)
         {
-            this.Name = name;
-            this.Price = price;
         }
         public override string Consume()
         {

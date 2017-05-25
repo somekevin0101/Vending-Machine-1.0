@@ -10,7 +10,6 @@ namespace Capstone.Classes
 {
     public class VendingMachine
     {
-
         private decimal balance = 0;
         public decimal Balance
         {
@@ -23,29 +22,28 @@ namespace Capstone.Classes
             balance += userMoneyInput;
             return balance;
         }
-        public Dictionary<string, List<Item>> Inventory = new Dictionary<string, List<Item>>();
-
-        
+        private Dictionary<string, List<Item>> inventory = new Dictionary<string, List<Item>>();
+        public VendingMachine(Dictionary<string, List<Item>> inventory)
+        {
+            this.inventory = inventory;
+        }
 
         public Item Purchase(string slot)
         {
-            List<Item> items = Inventory[slot];
+            List<Item> items = inventory[slot];
             Item purchasedItem = items[0];
             items.RemoveAt(0);
             return purchasedItem;
-            
-
         }
 
         public bool IsSoldOut(string slot)
         {
-            List<Item> items = Inventory[slot];
+            List<Item> items = inventory[slot];
             return items.Count == 0;
-
         }
         public bool InsufficientFunds(string slot)
         {
-            List<Item> items = Inventory[slot];
+            List<Item> items = inventory[slot];
             return items[0].Price < balance;
         }
         public string CompleteTransaction(decimal balance)
@@ -58,8 +56,6 @@ namespace Capstone.Classes
             balance = balance - (nickles * .05M);
 
             return "Your Change is " + quarters + " quarters, " + dimes + " dimes, " + nickles + " nickles";
-
-            
         }
 
     }
