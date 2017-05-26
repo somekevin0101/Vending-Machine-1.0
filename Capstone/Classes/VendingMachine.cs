@@ -10,6 +10,8 @@ namespace Capstone.Classes
 {
     public class VendingMachine
     {
+
+
         private decimal balance = 0;
         public decimal Balance
         {
@@ -20,6 +22,7 @@ namespace Capstone.Classes
         public decimal FeedMoney(decimal userMoneyInput)
         {
             balance += userMoneyInput;
+            
             return balance;
         }
         private Dictionary<string, List<Item>> inventory = new Dictionary<string, List<Item>>();
@@ -30,9 +33,17 @@ namespace Capstone.Classes
 
         public Item Purchase(string slot)
         {
+            string directory = Directory.GetCurrentDirectory();
+            string file = "log.txt";
+            string fullPath = Path.Combine(directory, file);
+            VendingMachFileWriter log = new VendingMachFileWriter(fullPath);
+
             List<Item> items = inventory[slot];
             Item purchasedItem = items[0];
             items.RemoveAt(0);
+            string oldBalance = balance.ToString();
+            balance -= purchasedItem.Price;
+            log.LogMessage(purchasedItem.Name + " " + slot + "   " + oldBalance + "    " + balance);
             return purchasedItem;
         }
 
@@ -44,7 +55,8 @@ namespace Capstone.Classes
         public bool InsufficientFunds(string slot)
         {
             List<Item> items = inventory[slot];
-            return items[0].Price < balance;
+            return items[0].Price > balance;
+
         }
         public string CompleteTransaction(decimal balance)
         {

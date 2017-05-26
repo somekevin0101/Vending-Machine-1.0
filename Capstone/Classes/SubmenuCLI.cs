@@ -34,7 +34,7 @@ namespace Capstone.Classes
                 Console.WriteLine("(3) Finish Transaction");
                 Console.WriteLine("(Q) Return to Main Menu");
 
-                string input = Console.ReadLine();
+                string input = Console.ReadLine().ToUpper();
 
                 if (input == "1" || input == "(1)")
                 {
@@ -51,7 +51,7 @@ namespace Capstone.Classes
                 {
                     Console.WriteLine("Which slot would you like to choose?");
 
-                    string slotInput = Console.ReadLine();
+                    string slotInput = Console.ReadLine().ToUpper();
                     if (vend.IsSoldOut(slotInput))
                     {
                         Console.WriteLine("I'm sorry that item is sold out, please try again with another choice.");
@@ -59,9 +59,16 @@ namespace Capstone.Classes
                     else if (vend.InsufficientFunds(slotInput))
                     {
                         Console.WriteLine("I'm sorry you do not have enough money");
+                        
                     }
-
-                    vend.Purchase(slotInput);
+                    else
+                    {
+                        Item purchasedItem = vend.Purchase(slotInput);
+                        List<Item> allPurchases = new List<Item>();
+                        allPurchases.Add(purchasedItem);
+                        Console.WriteLine("you have purchased " + purchasedItem.Name);
+                        Console.WriteLine("your new balance is " + vend.Balance);
+                    }
                 }
                 else if (input == "3" || input == "(3)")
                 {
@@ -69,7 +76,7 @@ namespace Capstone.Classes
 
                 }
 
-                else if (input == "Q" || input == "(Q)" || input == "q" || input == "(q)")
+                else if (input == "Q" || input == "(Q)")
                 {
                     Console.WriteLine("Returning to Main Menu");
                     break;
