@@ -43,7 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\BringInInventory.cs" />
     <Compile Include="Classes\Candy.cs" />
     <Compile Include="Classes\Chips.cs" />
     <Compile Include="Classes\Drink.cs" />

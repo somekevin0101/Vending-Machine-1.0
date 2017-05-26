@@ -38,10 +38,18 @@ namespace Capstone.Classes
 
                     Console.WriteLine("Please enter a dollar amount(1, 2, 5, 10,)");
                     string moneyInput = Console.ReadLine();
-                    Decimal.TryParse(moneyInput, out moneyParsed);
-                    vend.FeedMoney(moneyParsed);
-                    Console.WriteLine("Money balance is $ " + vend.Balance);
-                    vmfw.LogMessage("FEED MONEY:     " + moneyParsed.ToString("C") + "      " + vend.Balance.ToString("C"));
+                    if(moneyInput == "1"|| moneyInput == "2" || moneyInput == "5" || moneyInput == "10")
+                    {
+                        Decimal.TryParse(moneyInput, out moneyParsed);
+                        vend.FeedMoney(moneyParsed);
+                        Console.WriteLine("Money balance is $ " + vend.Balance);
+                        vmfw.LogMessage("FEED MONEY:     " + moneyParsed.ToString("C") + "      " + vend.Balance.ToString("C"));
+
+                    }
+                    else
+                    {
+                        Console.WriteLine("Amount not valid, your bill is being returned");
+                    }
                 }
 
                 else if (input == "2" || input == "(2)")
@@ -49,14 +57,19 @@ namespace Capstone.Classes
                     Console.WriteLine("Which slot would you like to choose?");
 
                     string slotInput = Console.ReadLine().ToUpper();
-                    if (vend.IsSoldOut(slotInput))
+                    if (vend.DoesKeyExist(slotInput))
+                    {
+                        Console.WriteLine("That slot does not exist, please try again");
+                    }
+
+                    else if (vend.IsSoldOut(slotInput))
                     {
                         Console.WriteLine("I'm sorry that item is sold out, please try again with another choice.");
                     }
                     else if (vend.InsufficientFunds(slotInput))
                     {
                         Console.WriteLine("I'm sorry you do not have enough money");
-                        
+
                     }
                     else
                     {
@@ -64,13 +77,14 @@ namespace Capstone.Classes
                         allPurchases.Add(purchasedItem);
                         Console.WriteLine("you have purchased " + purchasedItem.Name);
                         Console.WriteLine("your new balance is " + vend.Balance);
-                        
+
                     }
                 }
                 else if (input == "3" || input == "(3)")
                 {
-                    vend.CompleteTransaction(vend.Balance, allPurchases);
-                    vmfw.LogMessage("GIVE CHANGE :" + vend.Balance.ToString("C") + "      " + vend.Balance.ToString("C"));
+                    decimal oldBalance = vend.Balance;
+                    vend.CompleteTransaction(allPurchases);
+                    vmfw.LogMessage("GIVE CHANGE :" + oldBalance.ToString("C") + "      " + vend.Balance.ToString("C"));
                     string salesPath = Path.Combine(directory, "salesreport.txt");
                     vmfw = new VendingMachFileWriter(salesPath);
                     decimal totalSales = 0;
@@ -81,6 +95,11 @@ namespace Capstone.Classes
                     }
                     vmfw.SalesReport("");
                     vmfw.SalesReport("**TOTAL SALES** " + totalSales.ToString("C"));
+                    vmfw.SalesReport("");
+                    vmfw.SalesReport("Never gonna give you up, never gonna let you down");
+                    vmfw.SalesReport("Never gonna run around and desert you");
+                    vmfw.SalesReport("Never gonna make you cry, never gonna say goodbye");
+                    vmfw.SalesReport("Never gonna tell a lie and hurt you");
                 }
 
                 else if (input == "Q" || input == "(Q)")

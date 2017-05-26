@@ -21,6 +21,8 @@ namespace Capstone.Classes
 
         public decimal FeedMoney(decimal userMoneyInput)
         {
+            // this method will take any amount, the submenu limits the dollar-type inputs to 1, 2, 5, 10
+            
             balance += userMoneyInput;
             
             return balance;
@@ -46,6 +48,12 @@ namespace Capstone.Classes
             log.LogMessage(purchasedItem.Name + " " + slot + "   " + oldBalance + "    " + balance);
             return purchasedItem;
         }
+        public bool DoesKeyExist(string slot)
+        {
+
+            return !(inventory.ContainsKey(slot));
+        }
+
 
         public bool IsSoldOut(string slot)
         {
@@ -58,7 +66,7 @@ namespace Capstone.Classes
             return items[0].Price > balance;
 
         }
-        public decimal CompleteTransaction(decimal balance, List<Item> allPurchases)
+        public decimal CompleteTransaction(List<Item> allPurchases)
         {
             Console.WriteLine("Enjoy your meal!");
             foreach(Item food in allPurchases)
