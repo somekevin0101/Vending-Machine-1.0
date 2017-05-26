@@ -12,20 +12,16 @@ namespace Capstone.Classes
     {
         private VendingMachFileWriter vmfw;
 
-        public void Display()
+        public void Display(VendingMachine vend)
         {
             string directory = Environment.CurrentDirectory;
             string filename = "Log.txt";
             string fullPath = Path.Combine(directory, filename);
             vmfw = new VendingMachFileWriter(fullPath);
+            List<Item> allPurchases = new List<Item>();
 
-            directory = Environment.CurrentDirectory;
-            filename = "vendingmachine.csv";
-            fullPath = Path.Combine(directory, filename);
-            VendingMachFileReader vmfr = new VendingMachFileReader();
-            Dictionary<string, List<Item>> inventory = vmfr.ReadFile(fullPath);
 
-            VendingMachine vend = new VendingMachine(inventory);
+
 
             while (true)
             {
@@ -43,8 +39,9 @@ namespace Capstone.Classes
                     Console.WriteLine("Please enter a dollar amount(1, 2, 5, 10,)");
                     string moneyInput = Console.ReadLine();
                     Decimal.TryParse(moneyInput, out moneyParsed);
-
-                    Console.WriteLine("Money balance is $ " + vend.FeedMoney(moneyParsed));
+                    vend.FeedMoney(moneyParsed);
+                    Console.WriteLine("Money balance is $ " + vend.Balance);
+                    vmfw.LogMessage("FEED MONEY:     " + moneyParsed.ToString("C") + "      " + vend.Balance.ToString("C"));
                 }
 
                 else if (input == "2" || input == "(2)")
@@ -64,16 +61,26 @@ namespace Capstone.Classes
                     else
                     {
                         Item purchasedItem = vend.Purchase(slotInput);
-                        List<Item> allPurchases = new List<Item>();
                         allPurchases.Add(purchasedItem);
                         Console.WriteLine("you have purchased " + purchasedItem.Name);
                         Console.WriteLine("your new balance is " + vend.Balance);
+                        
                     }
                 }
                 else if (input == "3" || input == "(3)")
                 {
-                    vend.CompleteTransaction(vend.Balance);
-
+                    vend.CompleteTransaction(vend.Balance, allPurchases);
+                    vmfw.LogMessage("GIVE CHANGE :" + vend.Balance.ToString("C") + "      " + vend.Balance.ToString("C"));
+                    string salesPath = Path.Combine(directory, "salesreport.txt");
+                    vmfw = new VendingMachFileWriter(salesPath);
+                    decimal totalSales = 0;
+                    foreach (Item item in allPurchases)
+                    {
+                        vmfw.SalesReport(item.Name + "|" + item.Price);
+                        totalSales += item.Price;
+                    }
+                    vmfw.SalesReport("");
+                    vmfw.SalesReport("**TOTAL SALES** " + totalSales.ToString("C"));
                 }
 
                 else if (input == "Q" || input == "(Q)")

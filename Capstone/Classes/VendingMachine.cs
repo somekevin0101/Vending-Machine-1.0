@@ -58,8 +58,13 @@ namespace Capstone.Classes
             return items[0].Price > balance;
 
         }
-        public string CompleteTransaction(decimal balance)
+        public decimal CompleteTransaction(decimal balance, List<Item> allPurchases)
         {
+            Console.WriteLine("Enjoy your meal!");
+            foreach(Item food in allPurchases)
+            {
+                Console.WriteLine(food.Consume());
+            }
             int quarters = (int)(balance / .25M);
             balance = balance - (quarters * .25M);
             int dimes = (int)(balance / .10M);
@@ -67,7 +72,20 @@ namespace Capstone.Classes
             int nickles = (int)(balance / .05M);
             balance = balance - (nickles * .05M);
 
-            return "Your Change is " + quarters + " quarters, " + dimes + " dimes, " + nickles + " nickles";
+            Console.WriteLine("Your Change is " + quarters + " quarters, " + dimes + " dimes, " + nickles + " nickles");
+            return balance;
+        }
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("VENDING MACHINE");
+            sb.AppendLine("Slot ID     Name            Quantity       Cost");
+            foreach(KeyValuePair<string , List<Item>> kvp in inventory)
+            {
+                sb.AppendLine(kvp.Key + "\t" + kvp.Value[0].Name.PadRight(24) + kvp.Value.Count.ToString().PadRight(11)
+                + kvp.Value[0].Price);
+            }
+            return sb.ToString();
         }
 
     }

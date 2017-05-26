@@ -18,7 +18,7 @@ namespace Capstone.Classes
         {
             try
             {
-                using (StreamWriter sw = new StreamWriter(fullPath))
+                using (StreamWriter sw = new StreamWriter(fullPath, true))
                 {
                     sw.WriteLine(DateTime.UtcNow + " " + message);
                 }
@@ -28,6 +28,20 @@ namespace Capstone.Classes
                 Console.WriteLine("Error occured writing file " + ex.ToString());
             }
 
+        }
+        public void SalesReport(string message)
+        {
+            try
+            {
+                using (StreamWriter sw = new StreamWriter(fullPath, true))
+                {
+                    sw.WriteLine(message);
+                }
+            }
+            catch(IOException ex)
+            {
+                Console.WriteLine("Error occured writing file " + ex.ToString());
+            }
         }
     }
 }
