@@ -44,8 +44,8 @@ namespace CapstoneTests
             inventory.Add("A1", allPurchases);
             VendingMachine testVend = new VendingMachine(inventory);
 
-            Assert.AreEqual(false, testVend.DoesKeyExist("A1"));
-            Assert.AreEqual(true, testVend.DoesKeyExist("B1"));
+            Assert.AreEqual(false, testVend.DoesSlotExist("A1"));
+            Assert.AreEqual(true, testVend.DoesSlotExist("B1"));
 
         }
         [TestMethod]

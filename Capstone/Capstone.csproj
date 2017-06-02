@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Candy.cs" />
+    <Compile Include="Classes\Change.cs" />
     <Compile Include="Classes\Chips.cs" />
     <Compile Include="Classes\Drink.cs" />
     <Compile Include="Classes\Gum.cs" />
@@ -53,6 +54,7 @@
     <Compile Include="Classes\VendingMachine.cs" />
     <Compile Include="Classes\Item.cs" />
     <Compile Include="Classes\VendingMachineCLI.cs" />
+    <Compile Include="Classes\VendingMachineException.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

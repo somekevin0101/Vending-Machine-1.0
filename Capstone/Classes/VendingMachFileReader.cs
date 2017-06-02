@@ -11,8 +11,11 @@ namespace Capstone.Classes
     {
         public Dictionary<string, List<Item>> ReadFile(string fullPath)
         {
-
             Dictionary<string, List<Item>> inventory = new Dictionary<string, List<Item>>();
+            const int SlotIndex = 0;
+            const int ProductIndex = 1;
+            const int PriceIndex = 2;
+            const int InitialQuantity = 5;
 
             try
             {
@@ -23,35 +26,35 @@ namespace Capstone.Classes
                         string line = sr.ReadLine();
                         string[] parts = line.Split('|');
                         List<Item> items = new List<Item>();
-                        if (parts[0].StartsWith("A"))
+                        if (parts[SlotIndex].StartsWith("A"))
                         {
-                            for (int i = 0; i < 5; i++)
+                            for (int i = 0; i < InitialQuantity; i++)
                             {
-                                items.Add(new Chips(parts[1], decimal.Parse(parts[2])));
+                                items.Add(new Chips(parts[ProductIndex], decimal.Parse(parts[PriceIndex])));
                             }
                         }
-                        else if (parts[0].StartsWith("B"))
+                        else if (parts[SlotIndex].StartsWith("B"))
                         {
-                            for (int i = 0; i < 5; i++)
+                            for (int i = 0; i < InitialQuantity; i++)
                             {
-                                items.Add(new Candy(parts[1], decimal.Parse(parts[2])));
+                                items.Add(new Candy(parts[ProductIndex], decimal.Parse(parts[PriceIndex])));
                             }
                         }
-                        else if (parts[0].StartsWith("C"))
+                        else if (parts[SlotIndex].StartsWith("C"))
                         {
-                            for (int i = 0; i < 5; i++)
+                            for (int i = 0; i < InitialQuantity; i++)
                             {
-                                items.Add(new Drink(parts[1], decimal.Parse(parts[2])));
+                                items.Add(new Drink(parts[ProductIndex], decimal.Parse(parts[PriceIndex])));
                             }
                         }
-                        else if (parts[0].StartsWith("D"))
+                        else if (parts[SlotIndex].StartsWith("D"))
                         {
-                            for (int i = 0; i < 5; i++)
+                            for (int i = 0; i < InitialQuantity; i++)
                             {
-                                items.Add(new Gum(parts[1], decimal.Parse(parts[2])));
+                                items.Add(new Gum(parts[ProductIndex], decimal.Parse(parts[PriceIndex])));
                             }
                         }
-                        inventory.Add(parts[0], items);
+                        inventory.Add(parts[SlotIndex], items);
                     }
                 }
             }
